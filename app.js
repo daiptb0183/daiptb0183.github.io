@@ -173,24 +173,6 @@ function clearArray() {
     stopFlag = true;
 }
 
-function initializeRandomRoute() {
-    
-    svg.selectAll('line').remove();
-    drawConnection()
-
-    if (dataset.length  > 1) {
-        let route = shuffle([...dataset])
-        drawRoute(route, color="orange", opacity=0.3, stroke=2)
-        routeLength = calculateRouteLength(route)
-        if (routeLength < bestRouteLength) {
-            bestRouteLength = routeLength
-            bestRoute = [...route]
-        }
-        drawRoute(bestRoute, color="black", opacity=0.8, stroke=2)
-        document.getElementById("toptext").innerHTML = `Best route length: ${Math.round(bestRouteLength)}`;
-    }
-}
-
 function calculateRouteLength(route) {
     
     let routeLength=0
@@ -257,6 +239,27 @@ function shuffle(array) {
   }
 
 var stopFlag = false;
+
+async function initializeRandomRoute() {
+    stopFlag = false
+    while (stopFlag == false) {
+        svg.selectAll('line').remove();
+        drawConnection()
+
+        if (dataset.length  > 1) {
+            let route = shuffle([...dataset])
+            drawRoute(route, color="orange", opacity=0.3, stroke=2)
+            routeLength = calculateRouteLength(route)
+            if (routeLength < bestRouteLength) {
+                bestRouteLength = routeLength
+                bestRoute = [...route]
+            }
+            drawRoute(bestRoute, color="black", opacity=0.8, stroke=2)
+            document.getElementById("toptext").innerHTML = `Best route length: ${Math.round(bestRouteLength)}`;
+    }
+            await sleep(50);
+    }
+}
 
 async function twoOpt(numberOfExchange) {
     stopFlag = false
