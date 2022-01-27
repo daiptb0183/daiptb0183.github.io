@@ -10,9 +10,9 @@
 	font-size:13px;
 	font-weight:bold;
 	padding:6px 12px;
-  text-decoration:none;
-  display: block; margin: auto;
-  margin-bottom:10px;
+	text-decoration:none;
+	display: block; margin: auto;
+	margin-bottom:10px;
 }
 .myButton:hover {
 	background:linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
@@ -106,3 +106,9 @@ body {
   stroke: black;
   shape-rendering: crispEdges;  /* Round any decimal pixels so it'll render nicely */
 }
+
+.center {
+	display: block; margin: auto;
+	margin-bottom:10px;
+	width: 30%;
+  }
