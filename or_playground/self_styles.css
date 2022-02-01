@@ -1,86 +1,9 @@
-.myButton {
-	box-shadow:inset 0px 1px 0px 0px #9acc85;
-	background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
-	background-color:#74ad5a;
-	border:1px solid #3b6e22;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	font-weight:bold;
-	padding:6px 12px;
-	text-decoration:none;
-	display: block; margin: auto;
-	margin-bottom:10px;
+#container{
+    text-align: center;
 }
-.myButton:hover {
-	background:linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
-	background-color:#68a54b;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
-
-.redButton {
-	box-shadow:inset 0px 1px 0px 0px #cf866c;
-	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
-	background-color:#d0451b;
-	border-radius:3px;
-	border:1px solid #942911;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	padding:6px 24px;
-	text-decoration:none;
-  text-shadow:0px 1px 0px #854629;
-  display: block; margin: auto;
-  margin-bottom:10px;
-}
-.redButton:hover {
-	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
-	background-color:#bc3315;
-}
-.redButton:active {
-	position:relative;
-	top:1px;
-}
-
-.greyButton {
-	box-shadow:inset 0px 1px 3px 0px #91b8b3;
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	background-color:#768d87;
-	border-radius:5px;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:11px 23px;
-	text-decoration:none;
-  text-shadow:0px -1px 0px #2b665e;
-  display: block; margin: auto;
-  margin-top:10px;
-  margin-bottom:10px;
-}
-.greyButton:hover {
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	background-color:#6c7c7c;
-}
-.greyButton:active {
-	position:relative;
-	top:1px;
-}
-
-
 
 #toptext {
-  font-family: Georgia, serif;
+  font-family: "Lucida Console", "Courier New", monospace;
   font-size: 25px;
   letter-spacing: 2px;
   word-spacing: 2px;
@@ -96,19 +19,158 @@
 
 
 body {
-  margin: 0;
+  margin:0px;
   font-family: sans-serif;
-  font-size: 11px;
+  font-size: 12px;
+  place-items: center;
+  display: grid;
 }
 
 .axis path, .axis line {
   fill: none;
-  stroke: black;
+  stroke: rgb(194, 190, 190);
   shape-rendering: crispEdges;  /* Round any decimal pixels so it'll render nicely */
 }
+
 
 .center {
 	display: block; margin: auto;
 	margin-bottom:10px;
 	width: 30%;
+}
+
+:root {
+	--border-size: 0.125rem;
+	--duration: 250ms;
+	--ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+	--font-family: monospace;
+	--color-primary: white;
+	--color-secondary: black;
+	--color-tertiary: dodgerblue;
+	--shadow: rgba(0, 0, 0, 0.1);
+	--space: 1rem;
   }
+
+.multi-button {
+	display: flex;
+	width: 20%;
+	box-shadow: var(--shadow) 4px 4px;
+  }
+  
+.multi-button button {
+flex-grow: 1;
+cursor: pointer;
+position: relative;
+padding:
+	calc(var(--space) / 1.125)
+	var(--space)
+	var(--space);
+border: var(--border-size) solid black;
+color: var(--color-secondary);
+background-color: var(--color-primary);
+font-size: 1.2rem;
+font-family: var(--font-family);
+text-shadow: var(--shadow) 2px 2px;
+transition: flex-grow var(--duration) var(--ease);
+}
+
+.multi-button button + button {
+border-left: var(--border-size) solid black;
+margin-left: calc(var(--border-size) * -1);
+}
+
+.multi-button button:hover,
+.multi-button button:focus {
+flex-grow: 2;
+color: white;
+outline: none;
+text-shadow: none;
+background-color: var(--color-secondary);
+}
+
+.multi-button button:focus {
+outline: var(--border-size) dashed var(--color-primary);
+outline-offset: calc(var(--border-size) * -3);
+}
+
+.multi-button:hover button:focus:not(:hover) {
+flex-grow: 1;
+color: var(--color-secondary);
+background-color: var(--color-primary);
+outline-color: var(--color-tertiary);
+}
+
+.multi-button button:active {
+transform: translateY(var(--border-size));
+}
+
+
+/* General button style */
+.btn {
+	border: 3px solid rgb(121, 8, 8);
+	font-family: 'Lato';
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	padding: 10px 40px;
+	display: inline-block;
+	margin: 0px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+  }
+  
+.btn:after {
+content: '';
+position: absolute;
+z-index: -1;
+-webkit-transition: all 0.3s;
+-moz-transition: all 0.3s;
+transition: all 0.3s;
+}
+
+/* Pseudo elements for icons */
+.btn:before {
+font-family: 'FontAwesome';
+speak: none;
+font-style: normal;
+font-weight: normal;
+font-variant: normal;
+text-transform: none;
+line-height: 1;
+position: relative;
+-webkit-font-smoothing: antialiased;
+}
+
+/* Button 3 */
+.btn-3 {
+background: #e74c3c;
+color: #fff;
+}
+
+.btn-3:hover {
+background: #c0392b;
+}
+
+.btn-3:active {
+background: #c0392b;
+top: 2px;
+}
+
+.btn-3:before {
+position: absolute;
+height: 100%;
+left: 0;
+top: 0;
+line-height: 3;
+font-size: 140%;
+width: 60px;
+}
+
+/* Button 3 */

@@ -18,11 +18,24 @@
         <div id="toptext">Best route length: 0</div>
         <script type="text/javascript" src="app_tsp.js"></script>
         
-        <button onclick="clearArray()" class="greyButton">Clear Graph</button>
+        <button class = "btn btn-3" style = "font-size:1.5rem" onclick="stop()">STOP</button>
+        <br>
 
-        <button id="randomSearchButton" onclick="initializeRandomRoute()" class="myButton">Brute Force Random</button>
-        <button id="randomOneExchangeOptbutton" onclick="twoOpt(1)" class="myButton">Random 1-Exchange</button>
-        <button id="randomTwoExchangeOptbutton" onclick="twoOpt(2)" class="myButton">Random 2-Exchanges</button>
-        <button id="stopButton" onclick="stop()" class="redButton">STOP</button>
+        <div class="multi-button">
+            <button onclick="clearArray()">Clear Graph</button>
+            <button onclick="clearRoute()">Clear Route</button>
+        </div>
+        
+        <br>
+        <div style="font-family: 'Oswald', sans-serif;">
+        <h1>Naive Algorithms</h1>
+        </div>
+        <div class="multi-button" style="width: 40%">
+            <button class = "multi-button button" style = "font-size: 1.1rem;background-color:rgb(214, 214, 214)" onclick="initializeRandomRoute()">Brute Force Random</button>
+            <button class = "multi-button button" style = "font-size: 1.1rem;background-color:rgb(214, 214, 214)" onclick="randomExchange(1)">Random 1-Exchange</button>
+            <button class = "multi-button button" style = "font-size: 1.1rem;background-color:rgb(214, 214, 214)" onclick="randomExchange(2)">Random 2-Exchanges</button>
+        </div>
+        <br>
+
     </body>
 </html>

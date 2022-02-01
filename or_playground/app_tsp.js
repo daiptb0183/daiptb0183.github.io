@@ -26,8 +26,8 @@ var yScale = d3.scale.linear()
 // Add a X and Y Axis (Note: orient means the direction that ticks go, not position)
 var xAxis = d3.svg.axis().scale(xScale).orient("top");
 var yAxis = d3.svg.axis().scale(yScale).orient("left");
-var secondXAxis = d3.svg.axis().scale(xScale).orient("bottom");
-var secondYAxis = d3.svg.axis().scale(yScale).orient("right");
+var secondXAxis = d3.svg.axis().tickValues([]).scale(xScale).orient("bottom");
+var secondYAxis = d3.svg.axis().tickValues([]).scale(yScale).orient("right");
 
 var circleAttrs = {
     cx: function(d) { return xScale(d.x); },
@@ -85,17 +85,22 @@ svg.on("click", function() {
     y: Math.round( yScale.invert(coords[1]))
     };
 
-    dataset.push(newData);   // Push data to our array
+    console.log(newData)
 
-    svg.selectAll("circle")  // For new circle, go through the update process
-    .data(dataset)
-    .enter()
-    .append("circle")
-    .attr(circleAttrs)  // Get attributes from circleAttrs var
-    .on("mouseover", handleMouseOver)
-    .on("mouseout", handleMouseOut);
+    if (newData.x <= 100 && newData.x >= 0 && 
+        newData.y <= 100 && newData.y >= 0 ) {
+            dataset.push(newData);   // Push data to our array
+            svg.selectAll("circle")  // For new circle, go through the update process
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr(circleAttrs)  // Get attributes from circleAttrs var
+            .on("mouseover", handleMouseOver)
+            .on("mouseout", handleMouseOut);
+        }
    
-    drawConnection()
+    //drawConnection()
+    stopFlag = true;
     document.getElementById("toptext").innerHTML = `Best route length: ${Math.round(0)}`;
     bestRouteLength = 1000000;
     bestRoute = [];
@@ -173,6 +178,25 @@ function clearArray() {
     stopFlag = true;
 }
 
+function clearRoute() {
+    svg.selectAll('line').remove();
+
+    
+    svg.selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr(circleAttrs)  // Get attributes from circleAttrs var
+        .on("mouseover", handleMouseOver)
+        .on("mouseout", handleMouseOut);
+
+    //drawConnection()
+    document.getElementById("toptext").innerHTML = `Best route length: ${Math.round(0)}`;
+    bestRouteLength = 1000000;
+    bestRoute = [];
+    stopFlag = true;
+}
+
 function calculateRouteLength(route) {
     
     let routeLength=0
@@ -244,7 +268,7 @@ async function initializeRandomRoute() {
     stopFlag = false
     while (stopFlag == false) {
         svg.selectAll('line').remove();
-        drawConnection()
+        //drawConnection()
 
         if (dataset.length  > 1) {
             let route = shuffle([...dataset])
@@ -261,11 +285,11 @@ async function initializeRandomRoute() {
     }
 }
 
-async function twoOpt(numberOfExchange) {
+async function randomExchange(numberOfExchange) {
     stopFlag = false
     while (stopFlag == false) {
         svg.selectAll('line').remove();
-        drawConnection()
+        //drawConnection()
 
         if (dataset.length  > 1) {
             if (bestRoute.length == 0) {
