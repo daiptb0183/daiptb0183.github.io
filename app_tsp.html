@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+
+        <link rel="stylesheet" href="styles.css">
+        <!-- Load D3 from site -->
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    
+      </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="toptext">Best route length: 0</div>
+        <script type="text/javascript" src="app.js"></script>
+        
+        <button onclick="clearArray()" class="greyButton">Clear Graph</button>
+
+        <button id="randomSearchButton" onclick="initializeRandomRoute()" class="myButton">Brute Force Random</button>
+        <button id="randomOneExchangeOptbutton" onclick="twoOpt(1)" class="myButton">Random 1-Exchange</button>
+        <button id="randomTwoExchangeOptbutton" onclick="twoOpt(2)" class="myButton">Random 2-Exchanges</button>
+        <button id="stopButton" onclick="stop()" class="redButton">STOP</button>
+    </body>
+</html>
