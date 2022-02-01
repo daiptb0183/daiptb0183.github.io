@@ -107,7 +107,7 @@ transform: translateY(var(--border-size));
 
 /* General button style */
 .btn {
-	border: 3px solid rgb(121, 8, 8);
+	border: none;
 	font-family: 'Lato';
 	font-size: inherit;
 	color: inherit;
