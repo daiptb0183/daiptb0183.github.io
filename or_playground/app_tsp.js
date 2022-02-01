@@ -85,8 +85,6 @@ svg.on("click", function() {
     y: Math.round( yScale.invert(coords[1]))
     };
 
-    console.log(newData)
-
     if (newData.x <= 100 && newData.x >= 0 && 
         newData.y <= 100 && newData.y >= 0 ) {
             dataset.push(newData);   // Push data to our array
@@ -207,8 +205,6 @@ function exportToCsv(filename, rows) {
         csvFile += processRow([rows[i].x,rows[i].y]);
     }
 
-    console.log(csvFile)
-
     var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
     if (navigator.msSaveBlob) { // IE 10+
         navigator.msSaveBlob(blob, filename);
@@ -252,6 +248,7 @@ function calculateRouteLength(route) {
 
     route.forEach(function(item, index) {
         if (index < route.length - 1) {
+            
             a = route[index].x - route[index+1].x;
             b = route[index].y - route[index+1].y;
 
@@ -378,4 +375,114 @@ function sleep(ms) {
 
 function stop(){
     stopFlag = true;
+}
+
+
+
+//SIMULATED ANNEALING
+
+function randomFloat(n)
+{
+	return (Math.random()*n);
+}
+
+function randomInt(n)
+{
+	return Math.floor(Math.random()*(n));
+}
+
+function randomInteger(a,b)
+{
+	return Math.floor(Math.random()*(b-a)+a);
+}
+
+function deep_copy(array, to)
+{
+	var i = array.length;
+	while(i--)
+	{
+		to[i] = [array[i].x,array[i].y];
+	}
+}
+
+function mutate2Opt(current_route, i, j)
+{
+	var neighbor = [];
+	neighbor = [...current_route];
+	while(i != j)
+	{
+		var t = neighbor[j];
+		neighbor[j] = neighbor[i];
+		neighbor[i] = t;
+
+		i = (i+1) % current_route.length;
+		if (i == j)
+			break;
+		j = (j-1+current_route.length) % current_route.length;
+	}
+	return neighbor;
+}
+
+function acceptanceProbability(current_cost, neighbor_cost, temperature)
+{
+	if(neighbor_cost < current_cost)
+		return 1;
+	return Math.exp((current_cost - neighbor_cost)/temperature);
+}
+
+async function simulatedAnnealing()
+{
+
+    temperature = 0.9;
+    COOLING_RATE = 0.99;
+
+	if (bestRoute.length == 0 && dataset.length > 0) {
+        bestRoute = [...dataset]
+    } else if (dataset.length == 0) {return}
+    
+    current_route = [...bestRoute]
+
+    bestRouteLength = 1000000;
+    
+    
+    stopFlag = false;
+    while (stopFlag==false) {
+        solve(temperature, COOLING_RATE);
+        await sleep(50);
+    }
+    
+}
+
+function solve(temperature, COOLING_RATE)
+{   
+	if(temperature>0)
+	{     
+		var current_cost = calculateRouteLength(current_route);
+		var k = randomInt(current_route.length);
+		var l = (k+1+ randomInt(current_route.length - 2)) % current_route.length;
+		if(k > l)
+		{
+			var tmp = k;
+			k = l;
+			l = tmp;
+		}
+		var neighbor = mutate2Opt(current_route, k, l);
+        var neighbor_cost = calculateRouteLength(neighbor);
+		if(Math.random() < acceptanceProbability(current_cost, neighbor_cost, temperature))
+		{
+			current_route = [...neighbor];
+            current_cost = calculateRouteLength(current_route);
+		}
+		if(current_cost < bestRouteLength)
+		{
+            bestRoute = [...current_route]
+			bestRouteLength = current_cost;
+        }
+        temperature *= COOLING_RATE;
+        svg.selectAll('line').remove();
+        drawRoute(neighbor, color="orange", opacity=0.3, stroke=2)
+        drawRoute(bestRoute, color="black", opacity=0.8, stroke=2)
+        document.getElementById("toptext").innerHTML = `Best route length: ${Math.round(bestRouteLength)}`;
+
+	}
 }
